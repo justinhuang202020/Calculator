@@ -19,6 +19,10 @@ bool BinaryTree::isEmpty(void) {
 	}
 	return false;
 } 
+/**
+inserts a postfix expression into the binary tree
+**/
+
 void BinaryTree::insertPostfix(vector<string> postfix) {
 	stack<BTNode*> st;
 	if (postfix.size()==0){
@@ -54,6 +58,9 @@ stack<BTNode*> BinaryTree::insertPostfixNode(string s, stack<BTNode*>st) {
     }
     return st;
 }
+/**
+inserts a regular node into the tree
+**/
 void BinaryTree::insert(string data) {
          root = insertRecursive(root, data);
  }
@@ -87,22 +94,18 @@ int BinaryTree::countNodesRecursive(BTNode *node) {
   	return numNodes;
 }
 bool BinaryTree::search(string data){
-	cout << "there\n";
   	return searchRecursive(root, data);
 }
 bool BinaryTree::searchRecursive(BTNode *node, string data) {
 	if (node->getData() == data) {
-		cout <<"1a\n";
        	return true;
 	}
    	if (node->getLeftBTNode() != NULL) {
-   		cout << "1b\n";
       	if (searchRecursive(node->getLeftBTNode(), data)) {
          	return true;
        	}
  	}
    	if (node->getRightBTNode() != NULL) {
-   		cout << "1c\n";
        	if (searchRecursive(node->getRightBTNode(), data)) {
            	return true;
        	}
@@ -140,23 +143,31 @@ void BinaryTree::postorderRecursive(BTNode *node) {
         cout << node->getData() << " ";
    	}
 }     
-float BinaryTree::evaluateExpressionTree() {
+double BinaryTree::evaluateExpressionTree() {
+	try{
 	return evaluateExpressionTreePrivate(root);
+	} catch(const char* msg) {
+		throw msg;
+	}
 }
-float BinaryTree::evaluateExpressionTreePrivate(BTNode *node) {
+double BinaryTree::evaluateExpressionTreePrivate(BTNode *node) {
 	if (ExpressionParser::isNumber(node->getData())) {
-		float ret = 0;
+		double ret = 0;
 		ret = strtof((node->getData()).c_str(),0);
 		return ret;
 	}
 	else {
-		float left = evaluateExpressionTreePrivate(node->getLeftBTNode());
-		float right = evaluateExpressionTreePrivate(node->getRightBTNode());
-		return evaluate(left, right, node->getData());	
+		double left = evaluateExpressionTreePrivate(node->getLeftBTNode());
+		double right = evaluateExpressionTreePrivate(node->getRightBTNode());
+		try{
+		return evaluate(left, right, node->getData());
+		} catch(const char* msg) {
+			throw msg;
+		}	
 	}
 	return 0;
 }
-float BinaryTree::evaluate(float left, float right, string symbol) {
+double BinaryTree::evaluate(double left, double right, string symbol) {
 	if (symbol == "+") {
 		return left + right;
 	}
@@ -167,6 +178,9 @@ float BinaryTree::evaluate(float left, float right, string symbol) {
 		return left*right;
 	}
 	else if (symbol == "/") {
+		if (right == 0.0) {
+			throw "Divide by 0 error";
+		}
 		return left/right;
 	}
 	return 0;

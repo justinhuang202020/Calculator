@@ -9,6 +9,9 @@ using std::vector;
 #ifndef BINARYTREE_H
 
 #define BINARYTREE_H
+/**
+This class implments a Binary Tree with the addition of functions that allow it to be an expression binary tree
+**/
 class BinaryTree {
 	public:
 		BinaryTree();
@@ -21,11 +24,11 @@ class BinaryTree {
 		void postorder(void);
 		void preorder(void);
 		void insertPostfix(vector<string> postfix);
-		float evaluateExpressionTree();
+		double evaluateExpressionTree();
 	private:
 		BTNode* root;
-		float evaluateExpressionTreePrivate(BTNode *node);
-		float evaluate(float left, float right, string symbol);
+		double evaluateExpressionTreePrivate(BTNode *node);
+		double evaluate(double left, double right, string symbol);
 		BTNode* insertRecursive(BTNode* node, string data);
 		int countNodesRecursive(BTNode* node);
 		bool searchRecursive(BTNode *node, string data);

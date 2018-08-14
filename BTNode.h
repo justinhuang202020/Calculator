@@ -3,6 +3,9 @@
 using namespace std;
 #ifndef BTNODE_H
 #define BTNODE_H
+/**
+implements a Binary Tree Node
+**/
 class BTNode {
 	public:
 		BTNode(std::string data);

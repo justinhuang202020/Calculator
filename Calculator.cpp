@@ -6,13 +6,16 @@ using namespace std;
 #include <vector>
 using std::vector;
 #include "Calculator.h"
-float Calculator::evaluate(string expression) {
-	if (ExpressionParser::isValid(expression)) {
-		throw "Invalid expression. Please check if inputs are valid\n";
-	}
+double  Calculator::evaluate(string expression) {
+	try {
 	BinaryTree bt;
 	std::vector<string> v = ExpressionParser::postfix(expression);
 	bt.insertPostfix(v);
 	return bt.evaluateExpressionTree();
+	}
+	catch(const char* msg) {
+		throw msg;
+	}
+
 
 }
